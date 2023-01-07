@@ -2,6 +2,7 @@
 
 
 **RRT-PRM-Astar-algorithms** this project includes two programs. The first program to find the shortest path in a grid using the RRT* algorithm. The second uses PRM to build the grid and A* to find the path through the nodes.
+
 **1. RRT algorithm**
 ![Screenshot_9](https://user-images.githubusercontent.com/100195623/211168305-639fcda1-0bc9-4557-98c0-caec00687f27.png)
 
