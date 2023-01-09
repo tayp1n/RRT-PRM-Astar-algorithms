@@ -1,6 +1,8 @@
-from shapely.geometry import Point, Polygon, LineString
+# http://bit.do/fVTi2
+from shapely.geometry import Polygon
 
 
+# class for Figures
 class Figures:
 
     def __init__(self, coord_list):
@@ -8,6 +10,7 @@ class Figures:
         self.polygon = Polygon(coord_list)
 
 
+# class for nodes
 class Nodes:
 
     def __init__(self, x_coord, y_coord, parent_index, cost):

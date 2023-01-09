@@ -1,10 +1,12 @@
+# http://bit.do/fVTi4
 import matplotlib.pyplot as plt
 import random
 import math
-from shapely.geometry import Point, Polygon, LineString
+from shapely.geometry import Point, LineString
 import Classes
 
 
+# it checks if the point is suitable for connection or not (for intersection with figures)
 def CheckIfValidPoint(point, node_to_connect, obstacles):
     is_valid = True
     for obj in obstacles:
@@ -23,6 +25,7 @@ def CheckIfValidPoint(point, node_to_connect, obstacles):
     return is_valid
 
 
+# function to add point to point tree with checks
 def AddPointToTree(rand_point, parent_index, min_node_dist, found_goal, search_radius, nodes_in_tree, goal, obstacles):
     # RRT* things
     # Find neighbouring points within search_radius
@@ -45,7 +48,7 @@ def AddPointToTree(rand_point, parent_index, min_node_dist, found_goal, search_r
 
     nodes_in_tree.append(Classes.Nodes(rand_point[0], rand_point[1], parent_index, min_cost))
 
-    # Finding if any modifications can be made to the existing tree with the adition of this new point
+    # Finding if any modifications can be made to the existing tree with the addition of this new point
     for index in neighbouring_nodes:
         curr_dist = math.sqrt(
             (rand_point[0] - nodes_in_tree[index].x_coord) ** 2 + (rand_point[1] - nodes_in_tree[index].y_coord) ** 2)
@@ -61,6 +64,7 @@ def AddPointToTree(rand_point, parent_index, min_node_dist, found_goal, search_r
     return found_goal
 
 
+# a random point on the map is selected
 def SamplePoint(counter, found_goal, bounds_of_plane, sample_goal, goal):
     rand_point = [random.uniform(0, bounds_of_plane[0]), random.uniform(0, bounds_of_plane[1])]
 
@@ -71,6 +75,7 @@ def SamplePoint(counter, found_goal, bounds_of_plane, sample_goal, goal):
     return rand_point
 
 
+# adding points to the plot for display
 def PlotTree(goal_index, nodes_in_tree):
     for node in nodes_in_tree:
         plt.plot([node.x_coord, nodes_in_tree[node.parent_index].x_coord],
@@ -99,13 +104,14 @@ def MainLoopForRRT():
     found_goal = False
     goal_index = 0
 
+    # our obstacles
     obstacles = [Classes.Figures([[20, 100], [23, 100], [23, 30], [20, 30], [20, 100]]),
                  Classes.Figures([[40, 70], [43, 70], [43, 0], [40, 0], [40, 70]]),
                  Classes.Figures([[60, 100], [63, 100], [63, 30], [60, 30], [60, 100]])]
 
-    goal = Classes.Figures([[80, 52], [84, 52], [84, 48], [80, 48], [80, 52]])
+    goal = Classes.Figures([[80, 52], [84, 52], [84, 48], [80, 48], [80, 52]])  # goal point
 
-    nodes_in_tree = [Classes.Nodes(point_of_origin[0], point_of_origin[1], 0, 0)]
+    nodes_in_tree = [Classes.Nodes(point_of_origin[0], point_of_origin[1], 0, 0)]  # add in the tree out start point
 
     # draw obstacles
     for obj in obstacles:
